@@ -1,0 +1,102 @@
+name: havrilesko
+proxy:
+  python:
+    - havrilesko-api.lndo.site:8000
+  node:
+    - havrilesko.lndo.site:3000
+services:
+  python:
+    type: python:custom
+    overrides:
+      image: havrilesko_local
+      build:
+        context: ./backend
+        dockerfile: ./Dockerfile
+        args:
+          BUILD_ENVIRONMENT: local
+      user: root
+      environment:
+        PYTHONPATH: /app/backend
+        DATABASE_URL: postgres://postgres:@database.havrilesko.internal:5432/havrilesko
+        DEBUG: "true"
+    ssl: true
+    scanner: false
+
+  node:
+    type: node:22
+    overrides:
+      image: node:22-trixie
+    build:
+      - mkdir -p /home/node/.local
+      - cd /app/frontend && npm install -g pnpm && pnpm i
+    scanner: false
+    ssl: true
+
+  database:
+    type: postgres:17
+    portforward: 5432
+    creds:
+      user: postgres
+      password: ""
+      database: havrilesko
+
+tooling:
+  python:
+    service: python
+    cmd: python
+  pip:
+    service: python
+    cmd: pip
+  psql:
+    service: database
+    cmd: psql -U postgres -d havrilesko
+  python-lint:
+    service: python
+    dir: /app/backend
+    cmd: black . --check && isort . --check-only && flake8
+  python-lint:fix:
+    service: python
+    dir: /app/backend
+    cmd: black . && isort . && flake8
+  python-test:
+    service: python
+    dir: /app/backend
+    cmd: pytest -n auto
+    env:
+      COLUMNS: 110
+  migrate:
+    service: python
+    dir: /app/backend
+    cmd: ./scripts/migrate.sh
+  makemigrations:
+    service: python
+    dir: /app/backend
+    cmd: ./scripts/create_migration.sh
+  runserver:
+    service: python
+    cmd: fastapi run --host 0.0.0.0 --port 8000
+    # cmd: python manage.py runserver_plus --print-sql 0.0.0.0:8000
+    dir: /app/backend
+  node-lint:
+    service: node
+    dir: /app/frontend
+    cmd: pnpm run lint && npx prettier -c .
+  node-lint:fix:
+    service: node
+    dir: /app/frontend
+    cmd: pnpm run lint && npx prettier --write .
+  node-test:
+    service: node
+    dir: /app/frontend
+    cmd: pnpm run test
+  node:
+    service: node
+  pnpm:
+    service: node
+    dir: /app/frontend
+  npx:
+    service: node
+    dir: /app/frontend
+    cmd: npx --prefix=/home/node/.local
+    env:
+      HOME: /home/node

@@ -1,0 +1,21 @@
+-r base.txt
+
+# Development
+watchfiles==0.24.0  # https://github.com/samuelcolvin/watchfiles
+debugpy==1.8.17  # https://github.com/microsoft/debugpy
+
+# Code Quality
+black==25.9.0  # https://black.readthedocs.io/en/stable/getting_started.html
+isort==7.0.0  # https://pycqa.github.io/isort/
+flake8==7.3.0  # https://gitlab.com/pycqa/flake8
+mypy==1.18.2  # https://github.com/python/mypy
+
+# Testing
+pytest==8.3.4  # https://docs.pytest.org/
+pytest-asyncio==0.24.0  # https://pytest-asyncio.readthedocs.io/
+pytest-cov==7.0.0  # https://github.com/pytest-dev/pytest-cov
+pytest-mock==3.15.1  # https://github.com/pytest-dev/pytest-mock
+pytest-xdist==3.8.0  # https://github.com/pytest-dev/pytest-xdist
+httpx==0.28.1  # https://www.python-httpx.org/ (For testing FastAPI)
+faker==40.1.0  # https://faker.readthedocs.io/ (Test data generation)
+coverage==7.11.0  # https://github.com/nedbat/coveragepy

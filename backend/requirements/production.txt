@@ -1,0 +1,8 @@
+# PRECAUTION: avoid production dependencies that aren't in development
+
+-r base.txt
+
+# Production ASGI server (uvicorn already in base.txt)
+# uvicorn handles production workloads well with --workers flag
+# Optional: gunicorn as process manager if needed
+# gunicorn==23.0.0  # https://github.com/benoitc/gunicorn

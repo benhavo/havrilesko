@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "Attach to Debug Server",
+      "type": "python",
+      "request": "attach",
+      "justMyCode": false,
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "/app/"
+        }
+      ],
+      "connect": {
+        "host": "localhost",
+        "port": 2223
+      }
+    }
+  ]
+}

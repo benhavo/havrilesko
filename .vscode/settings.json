@@ -1,0 +1,16 @@
+{
+  "black-formatter.args": ["--config", "./backend/pyproject.toml"],
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.configPath": "./frontend/.prettierrc.js",
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none",
+  "eslint.options": {
+    "configFile": "./frontend/.eslintrc"
+  },
+  "typescript.tsdk": "frontend/node_modules/typescript/lib"
+}
