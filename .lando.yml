@@ -28,7 +28,9 @@ services:
       image: node:22-trixie
     build:
       - mkdir -p /home/node/.local
-      - cd /app/frontend && npm install -g pnpm && pnpm i
+      - npm install -g pnpm
+      - pnpm config set node-linker hoisted --global
+      - cd /app/frontend && pnpm i
     scanner: false
     ssl: true
 
