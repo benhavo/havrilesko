@@ -1,10 +1,12 @@
 export const ROUTES = [
   {
     path: "/",
-    element: < div/>,
+    label: "Home",
+    element: <div />,
   },
   {
     path: "/page1",
-    element: < div/>,
+    label: "Page 1",
+    element: <div />,
   },
 ];
